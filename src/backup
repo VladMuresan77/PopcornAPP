@@ -1,0 +1,23 @@
+import React from 'react'
+import {moviesData} from "../DATA/moviesData"
+
+const Home = () => {
+  return (
+    <div className='min-h-screen pt-24 flex item-center justify-center'>
+        <main className='w-full max-w-xl m-3 md:m-8 z-50 space-y-8 border border-gray-700/50 rounded-xl p-5 sm:p-10 backdrop-blur-xl bg-black/80'>
+        <h1 className='text-3xl font-bold text-center'>Filme disponibile</h1>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>{moviesData.map(MovieTypes=>(
+          <p key={MovieTypes.imdbID}>{MovieTypes.Title}</p>
+        ))}</div>
+        </main>
+    </div>
+    // <div className='relative min-h-screen  w-full flex items-center justify-center'>
+    //     <div className='flex flex-col items-center text-center max-w-3xl gap-5 px-4 '>
+    //     <h1 className='text-6xl font-bold text-black text-center '>Home</h1> 
+    //     <p>Pagina primcipala</p>   
+    //     </div>
+    //     </div>
+  )
+}
+
+export default Home
