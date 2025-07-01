@@ -31,9 +31,19 @@ function App() {
 
         if (userSnap.exists()) {
           const data = userSnap.data();
-          setFavoriteMovies(data.favoriteMovies ?? []);
-          setWatchedMovies(data.watchedMovies ?? []);
-          setPlanToWatchMovies(data.planToWatchMovies ?? []);
+          setFavoriteMovies(data.favorites ?? []);
+          setWatchedMovies(data.watched ?? []);
+          setPlanToWatchMovies(data.planToWatch ?? []);
+        } else {
+          // If no data exists, initialize empty lists in Firestore
+          await setDoc(userDoc, {
+            favorites: [],
+            watched: [],
+            planToWatch: [],
+          });
+          setFavoriteMovies([]);
+          setWatchedMovies([]);
+          setPlanToWatchMovies([]);
         }
       } catch (error) {
         console.error('Error loading user data:', error);
@@ -52,7 +62,7 @@ function App() {
         const userDoc = doc(db, 'users', globalUser.uid);
         await setDoc(
           userDoc,
-          { favoriteMovies, watchedMovies, planToWatchMovies },
+          { favorites: favoriteMovies, watched: watchedMovies, planToWatch: planToWatchMovies },
           { merge: true }
         );
       } catch (error) {

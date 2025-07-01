@@ -22,6 +22,7 @@ type AuthContextType = {
   signup: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   updateUserData: (field: keyof UserData, movies: any[]) => Promise<void>;
+  authLoading: boolean;   
 };
 
 const defaultUserData: UserData = {
@@ -35,6 +36,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [globalUser, setGlobalUser] = useState<User | null>(null);
   const [userData, setUserData] = useState<UserData>(defaultUserData);
+  const [authLoading, setAuthLoading] = useState(true); 
 
   const fetchUserData = async (uid: string) => {
     const docRef = doc(db, 'users', uid);
@@ -79,10 +81,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setGlobalUser(user);
-        fetchUserData(user.uid);
+        fetchUserData(user.uid).finally(() => setAuthLoading(false));
       } else {
         setGlobalUser(null);
         setUserData(defaultUserData);
+        setAuthLoading(false);
       }
     });
     return unsubscribe;
@@ -90,7 +93,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ globalUser, userData, login, signup, logout, updateUserData }}
+      value={{ globalUser, userData, login, signup, logout, updateUserData, authLoading }}
     >
       {children}
     </AuthContext.Provider>
