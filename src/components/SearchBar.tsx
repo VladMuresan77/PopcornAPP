@@ -1,17 +1,25 @@
-type Props={
-    query: string
-    onChange: (value:string) => void;
-}
+import React, { ChangeEvent } from 'react';
 
-const SearchBar = ({query,onChange}: Props) =>{
-    return (
-        <input
-        type= "text"
-        value={query}
-        onChange={(e)=> onChange(e.target.value)}
-        placeholder="Search movies..." 
-        className="w-full md:w-64 px-4 py-2 rounded-lg bg-slate-700 text-white placeholder-gray-400 focus:outline-none focus:ring-sky-500 transition"/>
-            )
-}
+type Props = {
+  query: string;
+  onChange: (value: string) => void;
+};
 
-export default SearchBar
+const SearchBar: React.FC<Props> = ({ query, onChange }) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.value);
+  };
+
+  return (
+    <input
+      type="text"
+      value={query}
+      onChange={handleInputChange}
+      placeholder="Search movies..."
+      className="w-full md:w-64 px-4 py-2 rounded-lg bg-slate-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-900 transition"
+      aria-label="Search movies"
+    />
+  );
+};
+
+export default SearchBar;

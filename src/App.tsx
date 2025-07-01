@@ -20,72 +20,81 @@ function App() {
 
   const { globalUser, authLoading } = useAuth();
 
-  // 1. Încarcă datele din Firestore după autentificare
+  // Load user data from Firestore after auth
   useEffect(() => {
     if (authLoading || !globalUser) return;
 
-    async function loadUserData() {
+    const loadUserData = async () => {
       try {
-        const userDoc = doc(db, "users", globalUser.uid);
+        const userDoc = doc(db, 'users', globalUser.uid);
         const userSnap = await getDoc(userDoc);
 
         if (userSnap.exists()) {
           const data = userSnap.data();
-          setFavoriteMovies(data.favoriteMovies || []);
-          setWatchedMovies(data.watchedMovies || []);
-          setPlanToWatchMovies(data.planToWatchMovies || []);
+          setFavoriteMovies(data.favoriteMovies ?? []);
+          setWatchedMovies(data.watchedMovies ?? []);
+          setPlanToWatchMovies(data.planToWatchMovies ?? []);
         }
       } catch (error) {
-        console.error("Error loading user data:", error);
+        console.error('Error loading user data:', error);
       }
-    }
+    };
 
     loadUserData();
   }, [globalUser, authLoading]);
 
-  // 2. Salvează datele în Firestore când se modifică listele
+  // Save user data to Firestore when lists change
   useEffect(() => {
     if (!globalUser || authLoading) return;
 
-    async function saveUserData() {
+    const saveUserData = async () => {
       try {
-        const userDoc = doc(db, "users", globalUser.uid);
-        await setDoc(userDoc, {
-          favoriteMovies,
-          watchedMovies,
-          planToWatchMovies,
-        }, { merge: true });
+        const userDoc = doc(db, 'users', globalUser.uid);
+        await setDoc(
+          userDoc,
+          { favoriteMovies, watchedMovies, planToWatchMovies },
+          { merge: true }
+        );
       } catch (error) {
-        console.error("Eroare la salvarea în Firestore:", error);
+        console.error('Error saving to Firestore:', error);
       }
-    }
+    };
 
     saveUserData();
   }, [favoriteMovies, watchedMovies, planToWatchMovies, globalUser, authLoading]);
 
-  // 3. Funcții de toggle
-  const toggleWatched = (movie: MovieTypes) => {
-    setWatchedMovies(prev =>
-      prev.some(m => m.imdbID === movie.imdbID)
-        ? prev.filter(m => m.imdbID !== movie.imdbID)
+  // Generic toggle function to avoid repetition
+  const toggleMovieInList = (
+    movie: MovieTypes,
+    list: MovieTypes[],
+    setList: React.Dispatch<React.SetStateAction<MovieTypes[]>>
+  ) => {
+    setList((prev) =>
+      prev.some((m) => m.imdbID === movie.imdbID)
+        ? prev.filter((m) => m.imdbID !== movie.imdbID)
         : [...prev, movie]
     );
   };
 
-  const toggleFavorite = (movie: MovieTypes) => {
-    setFavoriteMovies(prev =>
-      prev.some(m => m.imdbID === movie.imdbID)
-        ? prev.filter(m => m.imdbID !== movie.imdbID)
-        : [...prev, movie]
-    );
-  };
+  // Wrapped toggle functions
+  const toggleWatched = (movie: MovieTypes) =>
+    toggleMovieInList(movie, watchedMovies, setWatchedMovies);
 
-  const addToPlanToWatch = (movie: MovieTypes) => {
-    setPlanToWatchMovies(prev =>
-      prev.some(m => m.imdbID === movie.imdbID)
-        ? prev.filter(m => m.imdbID !== movie.imdbID)
-        : [...prev, movie]
-    );
+  const toggleFavorite = (movie: MovieTypes) =>
+    toggleMovieInList(movie, favoriteMovies, setFavoriteMovies);
+
+  const addToPlanToWatch = (movie: MovieTypes) =>
+    toggleMovieInList(movie, planToWatchMovies, setPlanToWatchMovies);
+
+  // Props shared across routes with lists & toggles
+  const listProps = {
+    query,
+    favoriteMovies,
+    watchedMovies,
+    planToWatchMovies,
+    toggleFavorite,
+    toggleWatched,
+    addToPlanToWatch,
   };
 
   return (
@@ -104,42 +113,11 @@ function App() {
 
       <div className="flex-grow">
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                query={query}
-                favoriteMovies={favoriteMovies}
-                watchedMovies={watchedMovies}
-                planToWatchMovies={planToWatchMovies}
-                toggleFavorite={toggleFavorite}
-                toggleWatched={toggleWatched}
-                addToPlanToWatch={addToPlanToWatch}
-              />
-            }
-          />
-          <Route path="/home" element={<Home
-            query={query}
-            favoriteMovies={favoriteMovies}
-            watchedMovies={watchedMovies}
-            planToWatchMovies={planToWatchMovies}
-            toggleFavorite={toggleFavorite}
-            toggleWatched={toggleWatched}
-            addToPlanToWatch={addToPlanToWatch}
-          />} />
+          <Route path="/" element={<Home {...listProps} />} />
+          <Route path="/home" element={<Home {...listProps} />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/myList" element={
-            <MyList
-              query={query}
-              favoriteMovies={favoriteMovies}
-              watchedMovies={watchedMovies}
-              planToWatchMovies={planToWatchMovies}
-              toggleFavorite={toggleFavorite}
-              toggleWatched={toggleWatched}
-              addToPlanToWatch={addToPlanToWatch}
-            />
-          } />
+          <Route path="/myList" element={<MyList {...listProps} />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </div>
