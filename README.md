@@ -1,5 +1,5 @@
 # React + TypeScript + Vite
-
+[![Netlify Status](https://api.netlify.com/api/v1/badges/99a2d2c3-ce5c-46e2-8ebc-8c13428d5148/deploy-status)](https://app.netlify.com/projects/popcornapp-movie-app/deploys)
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
