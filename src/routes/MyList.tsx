@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import { FavoriteIcon } from '../components/Icons';
-import type { MovieTypes } from '../types/movieTypes';
+import type { MovieTypes, WatchedTypes } from '../types/movieTypes';
 
 type Props = {
   query: string;
-  favoriteMovies: MovieTypes[];
-  planToWatchMovies: MovieTypes[];
+  favoriteMovies: WatchedTypes[];
+  planToWatchMovies: WatchedTypes[];
   toggleFavorite: (movie: MovieTypes) => void;
   addToPlanToWatch: (movie: MovieTypes) => void;
 };
