@@ -5,21 +5,21 @@ export const moviesData: MovieTypes[] = [
   {
     imdbID: "tt1375666",
     Title: "Inception",
-    Year: 2010,
+    Year: "2010",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
   },
   {
     imdbID: "tt0133093",
     Title: "The Matrix",
-    Year: 1999,
+    Year: "1999",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
   },
   {
     imdbID: "tt6751668",
     Title: "Parasite",
-    Year: 2019,
+    Year: "2019",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
   },
@@ -29,7 +29,7 @@ export const recommendedMovies: ExtendedMovieType[] = [
   {
     imdbID: "tt1751634",
     Title: "The Sandman",
-    Year: 2022,
+    Year: "2022",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BNjY5MGQ3N2EtZmFjYy00ODUwLTk1MzctZWIzNDQ0ZTZiNzRkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
     runtime: 45,
@@ -41,7 +41,7 @@ export const recommendedMovies: ExtendedMovieType[] = [
   {
     imdbID: "tt15398776",
     Title: "Oppenheimer",
-    Year: 2023,
+    Year: "2023",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BZDk2MGI4ZDItZGU1Yy00ZmIxLTgzMzAtNmJhNzIzNjkxYzBhXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
     runtime: 180,
@@ -53,7 +53,7 @@ export const recommendedMovies: ExtendedMovieType[] = [
   {
     imdbID: "tt10919420",
     Title: "Squid Game",
-    Year: 2021,
+    Year: "2021",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BMTg2NzQxZmMtMzAwYy00OTVmLTgwZTEtN2EzNWRhZTcxNTdjXkEyXkFqcGdeQXVyMTQyMTMwOTk0._V1_SX300.jpg",
     runtime: 55,

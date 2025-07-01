@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { moviesData } from '../DATA/moviesData';
+
 import { FavoriteIcon, WatchedIcon, PlanToWatchIcon, Star } from '../components/Icons';
 import type { WatchedTypes } from '../types/movieTypes';
 import { AVGStats } from '../components/utils';
-import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css';
+
 
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 

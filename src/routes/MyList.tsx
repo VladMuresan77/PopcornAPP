@@ -4,7 +4,7 @@ import type { MovieTypes, WatchedTypes } from '../types/movieTypes';
 
 type Props = {
   query: string;
-  favoriteMovies: WatchedTypes[];
+  favoriteMovies: WatchedTypes[]
   planToWatchMovies: WatchedTypes[];
   toggleFavorite: (movie: MovieTypes) => void;
   addToPlanToWatch: (movie: MovieTypes) => void;
