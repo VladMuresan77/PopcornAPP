@@ -1,18 +1,34 @@
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
+import type { User } from 'firebase/auth';
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  User,
+  
 } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+
+import {
+  doc,
+  getDoc,
+  setDoc,
+} from 'firebase/firestore';
+
 import { auth, db } from '../../firebase';
 
+type Movie = {
+  imdbID: string;
+  Title: string;
+  Year: string;
+  Poster: string;
+};
+
 type UserData = {
-  favorites: any[];
-  watched: any[];
-  planToWatch: any[];
+  favorites: Movie[];
+  watched: Movie[];
+  planToWatch: Movie[];
 };
 
 type AuthContextType = {
@@ -21,8 +37,8 @@ type AuthContextType = {
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
-  updateUserData: (field: keyof UserData, movies: any[]) => Promise<void>;
-  authLoading: boolean;   
+  updateUserData: (field: keyof UserData, movies: Movie[]) => Promise<void>;
+  authLoading: boolean;
 };
 
 const defaultUserData: UserData = {
@@ -36,45 +52,68 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [globalUser, setGlobalUser] = useState<User | null>(null);
   const [userData, setUserData] = useState<UserData>(defaultUserData);
-  const [authLoading, setAuthLoading] = useState(true); 
+  const [authLoading, setAuthLoading] = useState(true);
 
   const fetchUserData = async (uid: string) => {
-    const docRef = doc(db, 'users', uid);
-    const snap = await getDoc(docRef);
+    try {
+      const docRef = doc(db, 'users', uid);
+      const snap = await getDoc(docRef);
 
-    if (snap.exists()) {
-      setUserData(snap.data() as UserData);
-    } else {
-      await setDoc(docRef, defaultUserData);
-      setUserData(defaultUserData);
+      if (snap.exists()) {
+        setUserData(snap.data() as UserData);
+      } else {
+        await setDoc(docRef, defaultUserData);
+        setUserData(defaultUserData);
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
     }
   };
 
   const login = async (email: string, password: string) => {
-    const res = await signInWithEmailAndPassword(auth, email, password);
-    setGlobalUser(res.user);
-    await fetchUserData(res.user.uid);
+    try {
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      setGlobalUser(res.user);
+      await fetchUserData(res.user.uid);
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
   };
 
   const signup = async (email: string, password: string) => {
-    const res = await createUserWithEmailAndPassword(auth, email, password);
-    await setDoc(doc(db, 'users', res.user.uid), defaultUserData);
-    setGlobalUser(res.user);
-    setUserData(defaultUserData);
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, 'users', res.user.uid), defaultUserData);
+      setGlobalUser(res.user);
+      setUserData(defaultUserData);
+    } catch (error) {
+      console.error('Signup error:', error);
+      throw error;
+    }
   };
 
   const logout = async () => {
-    await signOut(auth);
-    setGlobalUser(null);
-    setUserData(defaultUserData);
+    try {
+      await signOut(auth);
+      setGlobalUser(null);
+      setUserData(defaultUserData);
+    } catch (error) {
+      console.error('Logout error:', error);
+      throw error;
+    }
   };
 
-  const updateUserData = async (field: keyof UserData, movies: any[]) => {
+  const updateUserData = async (field: keyof UserData, movies: Movie[]) => {
     if (!globalUser) return;
-    const docRef = doc(db, 'users', globalUser.uid);
-    const updatedData = { ...userData, [field]: movies };
-    await setDoc(docRef, updatedData);
-    setUserData(updatedData);
+    try {
+      const docRef = doc(db, 'users', globalUser.uid);
+      await updateDoc(docRef, { [field]: movies });
+      setUserData((prev) => ({ ...prev, [field]: movies }));
+    } catch (error) {
+      console.error('Error updating user data:', error);
+      throw error;
+    }
   };
 
   useEffect(() => {

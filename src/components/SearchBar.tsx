@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import type { ChangeEvent } from 'react';
 
 type Props = {
   query: string;

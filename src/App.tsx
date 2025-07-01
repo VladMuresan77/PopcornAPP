@@ -16,7 +16,7 @@ function App() {
   const [favoriteMovies, setFavoriteMovies] = useState<MovieTypes[]>([]);
   const [watchedMovies, setWatchedMovies] = useState<MovieTypes[]>([]);
   const [planToWatchMovies, setPlanToWatchMovies] = useState<MovieTypes[]>([]);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState<string>('');
 
   const { globalUser, authLoading } = useAuth();
 
@@ -76,7 +76,7 @@ function App() {
   // Generic toggle function to avoid repetition
   const toggleMovieInList = (
     movie: MovieTypes,
-    list: MovieTypes[],
+    
     setList: React.Dispatch<React.SetStateAction<MovieTypes[]>>
   ) => {
     setList((prev) =>
