@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import { FavoriteIcon, WatchedIcon, PlanToWatchIcon, Star } from '../components/Icons';
 import type { MovieTypes, WatchedTypes } from '../types/movieTypes';
 import { AVGStats } from '../components/utils';
-
 
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 
@@ -16,12 +15,12 @@ type Props = {
   favoriteMovies: MovieTypes[];
   watchedMovies: WatchedTypes[];
   planToWatchMovies: WatchedTypes[];
-  toggleFavorite: (movie: MovieTypes[0]) => void;
-  toggleWatched: (movie: WatchedTypes[0]) => void;
-  addToPlanToWatch: (movie: WatchedTypes[0]) => void;
+  toggleFavorite: (movie: MovieTypes) => void;
+  toggleWatched: (movie: WatchedTypes) => void;
+  addToPlanToWatch: (movie: WatchedTypes) => void;
 };
 
-const fetchMovieDetails = async (imdbID: string): Promise<WatchedTypes[0] | null> => {
+const fetchMovieDetails = async (imdbID: string): Promise<WatchedTypes | null> => {
   try {
     const res = await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${imdbID}`);
     const data = await res.json();
@@ -53,7 +52,7 @@ const Home = ({
   addToPlanToWatch,
 }: Props) => {
   const [watchedMoviesState, setWatchedMoviesState] = useState<WatchedTypes[]>(watchedMovies);
-  const [selectedMovie, setSelectedMovie] = useState<WatchedTypes[0] | null>(null);
+  const [selectedMovie, setSelectedMovie] = useState<WatchedTypes | null>(null);
   const [userRating, setUserRating] = useState<number | ''>('');
   const [movieResults, setMovieResults] = useState<WatchedTypes[]>([]);
   const [recommendedMovies, setRecommendedMovies] = useState<WatchedTypes[]>([]);
@@ -105,7 +104,7 @@ const Home = ({
         ).toFixed(1)
       : '0';
 
-  const onSelectedMovie = useCallback((movie: WatchedTypes[0]) => {
+  const onSelectedMovie = useCallback((movie: WatchedTypes) => {
     setSelectedMovie(movie);
     setUserRating(movie.userRating ?? '');
   }, []);
@@ -148,21 +147,21 @@ const Home = ({
                 <div className="flex gap-2 ml-auto">
                   <FavoriteIcon
                     filled={favoriteMovies.some(m => m.imdbID === movie.imdbID)}
-                    onClick={e => {
+                    onClick={(e: React.MouseEvent) => {
                       e.stopPropagation();
                       toggleFavorite(movie);
                     }}
                   />
                   <WatchedIcon
                     filled={watchedMoviesState.some(m => m.imdbID === movie.imdbID)}
-                    onClick={e => {
+                    onClick={(e: React.MouseEvent) => {
                       e.stopPropagation();
                       toggleWatched(movie);
                     }}
                   />
                   <PlanToWatchIcon
                     filled={planToWatchMovies.some(m => m.imdbID === movie.imdbID)}
-                    onClick={e => {
+                    onClick={(e: React.MouseEvent) => {
                       e.stopPropagation();
                       addToPlanToWatch(movie);
                     }}

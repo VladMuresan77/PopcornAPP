@@ -1,13 +1,14 @@
-import React, { useMemo } from 'react';
+import type { ExtendedMovieType, WatchedTypes } from '../types/movieTypes';
 import { FavoriteIcon } from '../components/Icons';
-import type { MovieTypes, WatchedTypes } from '../types/movieTypes';
+import { useMemo } from 'react';
 
 type Props = {
   query: string;
-  favoriteMovies: WatchedTypes[]
+  favoriteMovies: WatchedTypes[];
   planToWatchMovies: WatchedTypes[];
-  toggleFavorite: (movie: MovieTypes) => void;
-  addToPlanToWatch: (movie: MovieTypes) => void;
+  toggleFavorite: (movie: WatchedTypes) => void;
+  addToPlanToWatch: (movie: WatchedTypes) => void;
+  removeFromPlanToWatch: (movie: WatchedTypes) => void;
 };
 
 const MovieListItem = ({
@@ -17,10 +18,10 @@ const MovieListItem = ({
   onRemovePlanToWatch,
   showRemoveButton = false,
 }: {
-  movie: MovieTypes;
+  movie: WatchedTypes;
   isFavorite?: boolean;
-  onToggleFavorite?: (movie: MovieTypes) => void;
-  onRemovePlanToWatch?: (movie: MovieTypes) => void;
+  onToggleFavorite?: (movie: WatchedTypes) => void;
+  onRemovePlanToWatch?: (movie: WatchedTypes) => void;
   showRemoveButton?: boolean;
 }) => {
   return (
@@ -75,7 +76,7 @@ const MovieListItem = ({
             className="ml-2"
             aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           >
-            <FavoriteIcon filled={!!isFavorite} />
+            <FavoriteIcon filled={!!isFavorite} onClick={() => {}} />
           </button>
         </div>
       )}
@@ -101,6 +102,7 @@ const MyList = ({
   planToWatchMovies,
   toggleFavorite,
   addToPlanToWatch,
+  removeFromPlanToWatch,
 }: Props) => {
   const filteredFavorites = useMemo(
     () => favoriteMovies.filter((movie) => movie.Title.toLowerCase().includes(query.toLowerCase())),
@@ -115,8 +117,6 @@ const MyList = ({
   return (
     <div className="min-h-screen pt-24 flex items-center justify-center">
       <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 border border-gray-600/30 rounded-2xl bg-black/40 backdrop-blur-lg shadow-xl flex flex-col lg:flex-row gap-6 transition-all duration-200">
-
-        {/* Favorite movies place */}
         <section className="flex-1 max-w-[42rem] bg-black/20 rounded-lg p-4 h-[30rem] overflow-y-auto custom-scrollbar">
           <h1 className="text-2xl text-white font-bold text-center mb-6">Favorite Movies</h1>
           <ul className="space-y-3">
@@ -134,7 +134,6 @@ const MyList = ({
           </ul>
         </section>
 
-        {/* Plan to watch */}
         <section className="flex-1 max-w-[42rem] bg-black/20 rounded-lg p-4 h-[30rem] overflow-y-auto">
           <h2 className="text-2xl text-white font-bold text-center mb-6">Plan to Watch</h2>
           {filteredPlanToWatch.length === 0 ? (
@@ -146,13 +145,12 @@ const MyList = ({
                   key={movie.imdbID}
                   movie={movie}
                   showRemoveButton
-                  onRemovePlanToWatch={addToPlanToWatch}
+                  onRemovePlanToWatch={removeFromPlanToWatch}
                 />
               ))}
             </ul>
           )}
         </section>
-
       </main>
     </div>
   );
