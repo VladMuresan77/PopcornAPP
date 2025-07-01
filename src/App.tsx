@@ -20,7 +20,6 @@ function App() {
 
   const { globalUser, authLoading } = useAuth();
 
-  // Load user data from Firestore after auth
   useEffect(() => {
     if (authLoading || !globalUser) return;
 
@@ -35,7 +34,6 @@ function App() {
           setWatchedMovies(data.watched ?? []);
           setPlanToWatchMovies(data.planToWatch ?? []);
         } else {
-          // If no data exists, initialize empty lists in Firestore
           await setDoc(userDoc, {
             favorites: [],
             watched: [],
@@ -53,7 +51,6 @@ function App() {
     loadUserData();
   }, [globalUser, authLoading]);
 
-  // Save user data to Firestore when lists change
   useEffect(() => {
     if (!globalUser || authLoading) return;
 
@@ -73,7 +70,6 @@ function App() {
     saveUserData();
   }, [favoriteMovies, watchedMovies, planToWatchMovies, globalUser, authLoading]);
 
-  // Generic toggle function with generic type T extending imdbID
   const toggleMovieInList = <T extends { imdbID: string }>(
     movie: T,
     setList: React.Dispatch<React.SetStateAction<T[]>>
@@ -85,7 +81,6 @@ function App() {
     );
   };
 
-  // Wrapped toggle functions, explicit type arguments
   const toggleWatched = (movie: WatchedTypes) =>
     toggleMovieInList<WatchedTypes>(movie, setWatchedMovies);
 
@@ -95,7 +90,6 @@ function App() {
   const addToPlanToWatch = (movie: WatchedTypes) =>
     toggleMovieInList<WatchedTypes>(movie, setPlanToWatchMovies);
 
-  // Props shared across routes with lists & toggles
   const listProps = {
     query,
     favoriteMovies,

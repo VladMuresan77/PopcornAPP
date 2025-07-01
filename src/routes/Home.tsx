@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import { FavoriteIcon, WatchedIcon, PlanToWatchIcon, Star } from '../components/Icons';
-import type { WatchedTypes } from '../types/movieTypes';
+import type { MovieTypes, WatchedTypes } from '../types/movieTypes';
 import { AVGStats } from '../components/utils';
 
 
@@ -13,10 +13,10 @@ const initialRecommendedIDs = [
 
 type Props = {
   query: string;
-  favoriteMovies: WatchedTypes[];
+  favoriteMovies: MovieTypes[];
   watchedMovies: WatchedTypes[];
   planToWatchMovies: WatchedTypes[];
-  toggleFavorite: (movie: WatchedTypes[0]) => void;
+  toggleFavorite: (movie: MovieTypes[0]) => void;
   toggleWatched: (movie: WatchedTypes[0]) => void;
   addToPlanToWatch: (movie: WatchedTypes[0]) => void;
 };
