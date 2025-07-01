@@ -14,19 +14,19 @@ const initialRecommendedIDs = [
 
 type Props = {
   query: string;
-  favoriteMovies: WatchedTypes;
-  watchedMovies: WatchedTypes;
-  planToWatchMovies: WatchedTypes;
-  toggleFavorite: (movie: typeof moviesData[0]) => void;
-  toggleWatched: (movie: typeof moviesData[0]) => void;
-  addToPlanToWatch: (movie: typeof moviesData[0]) => void;
+  favoriteMovies: WatchedTypes[];
+  watchedMovies: WatchedTypes[];
+  planToWatchMovies: WatchedTypes[];
+  toggleFavorite: (movie: WatchedTypes[0]) => void;
+  toggleWatched: (movie: WatchedTypes[0]) => void;
+  addToPlanToWatch: (movie: WatchedTypes[0]) => void;
 };
 
-const fetchMovieDetails = async (imdbID: string) => {
+const fetchMovieDetails = async (imdbID: string): Promise<WatchedTypes[0] | null> => {
   try {
     const res = await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${imdbID}`);
     const data = await res.json();
-    if (data.Response === 'True' || data.imdbID) {
+    if (data.Response === 'True' && data.imdbID) {
       return {
         imdbID: data.imdbID,
         Title: data.Title,
@@ -53,27 +53,25 @@ const Home = ({
   toggleWatched,
   addToPlanToWatch,
 }: Props) => {
-  const [watchedMoviesState, setWatchedMoviesState] = useState<WatchedTypes>(watchedMovies);
+  const [watchedMoviesState, setWatchedMoviesState] = useState<WatchedTypes[]>(watchedMovies);
   const [selectedMovie, setSelectedMovie] = useState<WatchedTypes[0] | null>(null);
   const [userRating, setUserRating] = useState<number | ''>('');
-  const [movieResults, setMovieResults] = useState<WatchedTypes>([]);
-  const [recommendedMovies, setRecommendedMovies] = useState<WatchedTypes>([]);
+  const [movieResults, setMovieResults] = useState<WatchedTypes[]>([]);
+  const [recommendedMovies, setRecommendedMovies] = useState<WatchedTypes[]>([]);
 
   useEffect(() => {
     setWatchedMoviesState(watchedMovies);
   }, [watchedMovies]);
 
-  // fetch recommended movies once
   useEffect(() => {
     (async () => {
       const movies = (
         await Promise.all(initialRecommendedIDs.map(id => fetchMovieDetails(id)))
-      ).filter(Boolean) as WatchedTypes;
+      ).filter(Boolean) as WatchedTypes[];
       setRecommendedMovies(movies);
     })();
   }, []);
 
-  // fetch for search results on query change
   useEffect(() => {
     if (!query.trim()) {
       setMovieResults([]);
@@ -87,7 +85,7 @@ const Home = ({
         if (data.Response === 'True' && Array.isArray(data.Search)) {
           const detailedMovies = (
             await Promise.all(data.Search.map((m: any) => fetchMovieDetails(m.imdbID)))
-          ).filter(Boolean) as WatchedTypes;
+          ).filter(Boolean) as WatchedTypes[];
           setMovieResults(detailedMovies);
         } else {
           setMovieResults([]);
@@ -131,7 +129,6 @@ const Home = ({
   return (
     <div className="min-h-screen pt-30 py-20 flex items-center flex-col justify-center">
       <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 border border-gray-600/30 rounded-2xl bg-black/40 backdrop-blur-lg shadow-xl flex flex-col lg:flex-row gap-6 transition-all duration-200">
-        {/* Left Column: Recommended-Search movies */}
         <div className="flex-1 max-w-[42rem] bg-black/20 rounded-lg p-4 overflow-y-auto h-[30rem]">
           <h1 className="text-2xl text-white font-bold text-center mb-6">
             {query.trim() === '' ? 'Recommended Movies' : 'Movies'}
@@ -149,7 +146,6 @@ const Home = ({
                   <p className="text-gray-400 text-sm text-left">📅 Year: {movie.Year}</p>
                   <p className="text-gray-400 text-sm text-left">⭐ IMDB: {movie.imdbRating}</p>
                 </div>
-              {/*Icons: heart, check, pin*/ }
                 <div className="flex gap-2 ml-auto">
                   <FavoriteIcon
                     filled={favoriteMovies.some(m => m.imdbID === movie.imdbID)}
@@ -178,7 +174,6 @@ const Home = ({
           </ul>
         </div>
 
-        {/* Right Column: Watched Movies-Selected Movie Detail */}
         <div className="flex-1 max-w-[42rem] bg-black/20 rounded-lg p-4 h-[30rem] overflow-y-auto text-gray-300">
           {selectedMovie ? (
             <>
@@ -186,7 +181,6 @@ const Home = ({
                 onClick={() => setSelectedMovie(null)}
                 className="mb-6 text-xl text-gray-400 hover:underline flex items-start"
               >
-                {/*  When the user clicks on a movie, show details and rating */}
                 ⮜
               </button>
               <h2 className="text-2xl font-semibold mb-4 text-center">{selectedMovie.Title}</h2>

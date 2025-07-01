@@ -4,7 +4,7 @@ export const watchedData: WatchedTypes[] = [
   {
     imdbID: "tt1375666",
     Title: "Inception",
-    Year: 2010,
+    Year: "2010",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
     runtime: 148,
@@ -15,7 +15,7 @@ export const watchedData: WatchedTypes[] = [
   {
     imdbID: "tt0088763",
     Title: "Back to the Future",
-    Year: 1985,
+    Year: "1985",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
     runtime: 116,
@@ -26,7 +26,7 @@ export const watchedData: WatchedTypes[] = [
   {
     imdbID: "tt0088863",
     Title: "Back to the ",
-    Year: 1985,
+    Year: "1985",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
     runtime: 116,

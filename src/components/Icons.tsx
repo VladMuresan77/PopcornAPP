@@ -1,5 +1,4 @@
-import React from 'react';
-import { forwardRef } from 'react';
+
 
 export const FavoriteIcon = ({ filled, onClick }: { filled: boolean; onClick: () => void }) => (
   <svg

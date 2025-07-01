@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { User } from 'firebase/auth';
 
@@ -7,13 +7,13 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  
 } from 'firebase/auth';
 
 import {
   doc,
   getDoc,
   setDoc,
+  updateDoc,
 } from 'firebase/firestore';
 
 import { auth, db } from '../../firebase';
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUserData(defaultUserData);
       }
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error('Eroare la preluarea datelor utilizatorului:', error);
     }
   };
 
@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setGlobalUser(res.user);
       await fetchUserData(res.user.uid);
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Eroare la autentificare:', error);
       throw error;
     }
   };
@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setGlobalUser(res.user);
       setUserData(defaultUserData);
     } catch (error) {
-      console.error('Signup error:', error);
+      console.error('Eroare la înregistrare:', error);
       throw error;
     }
   };
@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setGlobalUser(null);
       setUserData(defaultUserData);
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error('Eroare la deconectare:', error);
       throw error;
     }
   };
@@ -111,7 +111,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await updateDoc(docRef, { [field]: movies });
       setUserData((prev) => ({ ...prev, [field]: movies }));
     } catch (error) {
-      console.error('Error updating user data:', error);
+      console.error('Eroare la actualizarea datelor utilizatorului:', error);
       throw error;
     }
   };
@@ -142,7 +142,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('useAuth trebuie folosit doar în interiorul unui AuthProvider');
   }
   return context;
 };

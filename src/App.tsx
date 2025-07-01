@@ -7,15 +7,15 @@ import MyList from './routes/MyList';
 import Contact from './routes/Contact';
 import Login from './routes/Login';
 
-import type { MovieTypes } from './types/movieTypes';
+import type { MovieTypes, WatchedTypes } from './types/movieTypes';
 import { useAuth } from './context/AuthContext';
 import { db } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 function App() {
   const [favoriteMovies, setFavoriteMovies] = useState<MovieTypes[]>([]);
-  const [watchedMovies, setWatchedMovies] = useState<MovieTypes[]>([]);
-  const [planToWatchMovies, setPlanToWatchMovies] = useState<MovieTypes[]>([]);
+  const [watchedMovies, setWatchedMovies] = useState<WatchedTypes[]>([]);
+  const [planToWatchMovies, setPlanToWatchMovies] = useState<WatchedTypes[]>([]);
   const [query, setQuery] = useState<string>('');
 
   const { globalUser, authLoading } = useAuth();
@@ -73,11 +73,10 @@ function App() {
     saveUserData();
   }, [favoriteMovies, watchedMovies, planToWatchMovies, globalUser, authLoading]);
 
-  // Generic toggle function to avoid repetition
-  const toggleMovieInList = (
-    movie: MovieTypes,
-    
-    setList: React.Dispatch<React.SetStateAction<MovieTypes[]>>
+  // Generic toggle function with generic type T extending imdbID
+  const toggleMovieInList = <T extends { imdbID: string }>(
+    movie: T,
+    setList: React.Dispatch<React.SetStateAction<T[]>>
   ) => {
     setList((prev) =>
       prev.some((m) => m.imdbID === movie.imdbID)
@@ -86,15 +85,15 @@ function App() {
     );
   };
 
-  // Wrapped toggle functions
-  const toggleWatched = (movie: MovieTypes) =>
-    toggleMovieInList(movie, watchedMovies, setWatchedMovies);
+  // Wrapped toggle functions, explicit type arguments
+  const toggleWatched = (movie: WatchedTypes) =>
+    toggleMovieInList<WatchedTypes>(movie, setWatchedMovies);
 
   const toggleFavorite = (movie: MovieTypes) =>
-    toggleMovieInList(movie, favoriteMovies, setFavoriteMovies);
+    toggleMovieInList<MovieTypes>(movie, setFavoriteMovies);
 
-  const addToPlanToWatch = (movie: MovieTypes) =>
-    toggleMovieInList(movie, planToWatchMovies, setPlanToWatchMovies);
+  const addToPlanToWatch = (movie: WatchedTypes) =>
+    toggleMovieInList<WatchedTypes>(movie, setPlanToWatchMovies);
 
   // Props shared across routes with lists & toggles
   const listProps = {
