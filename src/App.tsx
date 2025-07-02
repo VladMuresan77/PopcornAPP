@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -8,6 +9,7 @@ import Contact from './routes/Contact';
 import Login from './routes/Login';
 
 import type { MovieTypes, WatchedTypes } from './types/movieTypes';
+import type { ListProps } from './types/ListaProps';
 import { useAuth } from './context/AuthContext';
 import { db } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
@@ -93,7 +95,7 @@ function App() {
   const removeFromPlanToWatch = (movie: WatchedTypes) =>
     setPlanToWatchMovies((prev) => prev.filter((m) => m.imdbID !== movie.imdbID));
 
-  const listProps = {
+  const listProps: ListProps = {
     query,
     favoriteMovies,
     watchedMovies,
