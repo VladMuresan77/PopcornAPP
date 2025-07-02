@@ -1,23 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { FavoriteIcon, WatchedIcon, PlanToWatchIcon, Star } from '../components/Icons';
-import type { MovieTypes, WatchedTypes } from '../types/movieTypes';
+import type { WatchedTypes } from '../types/movieTypes';
+import type { ListProps as Props } from '../types/ListaProps';
 import { AVGStats } from '../components/utils';
 
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 
 const initialRecommendedIDs = [
-  'tt16311594', 'tt15398776', 'tt9100054', 'tt0111161', 'tt0068646', 'tt0468569', 'tt0137523', 'tt0109830', 'tt1375666',
+  'tt16311594', 'tt15398776', 'tt9100054', 'tt0111161',
+  'tt0068646', 'tt0468569', 'tt0137523', 'tt0109830', 'tt1375666',
 ];
-
-type Props = {
-  query: string;
-  favoriteMovies: MovieTypes[];
-  watchedMovies: WatchedTypes[];
-  planToWatchMovies: WatchedTypes[];
-  toggleFavorite: (movie: MovieTypes) => void;
-  toggleWatched: (movie: WatchedTypes) => void;
-  addToPlanToWatch: (movie: WatchedTypes) => void;
-};
 
 const fetchMovieDetails = async (imdbID: string): Promise<WatchedTypes | null> => {
   try {
@@ -49,6 +41,7 @@ const Home = ({
   toggleFavorite,
   toggleWatched,
   addToPlanToWatch,
+  removeFromPlanToWatch, // ✅ acum e recunoscut corect
 }: Props) => {
   const [watchedMoviesState, setWatchedMoviesState] = useState<WatchedTypes[]>(watchedMovies);
   const [selectedMovie, setSelectedMovie] = useState<WatchedTypes | null>(null);
