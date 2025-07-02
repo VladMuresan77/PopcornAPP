@@ -1,7 +1,16 @@
 import { useMemo } from 'react';
 import { FavoriteIcon } from '../components/Icons';
-import type { WatchedTypes } from '../types/movieTypes';
+import type { MovieTypes, WatchedTypes } from '../types/movieTypes';
 import type { ListProps } from '../types/ListProps';
+
+const isWatchedTypes = (movie: MovieTypes | WatchedTypes): movie is WatchedTypes => {
+  return (
+    'runtime' in movie &&
+    'imdbRating' in movie &&
+    'userRating' in movie &&
+    'Plot' in movie
+  );
+};
 
 const MovieListItem = ({
   movie,
@@ -10,7 +19,7 @@ const MovieListItem = ({
   onRemovePlanToWatch,
   showRemoveButton = false,
 }: {
-  movie: WatchedTypes;
+  movie: MovieTypes | WatchedTypes;
   isFavorite?: boolean;
   onToggleFavorite?: (movie: WatchedTypes) => void;
   onRemovePlanToWatch?: (movie: WatchedTypes) => void;
@@ -32,7 +41,7 @@ const MovieListItem = ({
         <h3 className={`text-white ${showRemoveButton ? 'text-lg font-semibold text-left' : 'text-sm sm:text-base'}`}>
           {movie.Title}
         </h3>
-        {showRemoveButton && (
+        {showRemoveButton && isWatchedTypes(movie) && (
           <div className="flex gap-4 mt-2 text-sm text-gray-300">
             <p>
               <span className="mr-1">⭐</span> {movie.imdbRating}
@@ -57,13 +66,17 @@ const MovieListItem = ({
               <span role="img" aria-label="IMDB">
                 ⭐
               </span>{' '}
-              <span className="text-gray-400">{movie.imdbRating}</span>
+              <span className="text-gray-400">
+                {isWatchedTypes(movie) ? movie.imdbRating : 'N/A'}
+              </span>
             </p>
           </div>
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onToggleFavorite(movie);
+              if (isWatchedTypes(movie)) {
+                onToggleFavorite?.(movie);
+              }
             }}
             className="ml-2"
             aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
@@ -73,7 +86,7 @@ const MovieListItem = ({
         </div>
       )}
 
-      {showRemoveButton && onRemovePlanToWatch && (
+      {showRemoveButton && onRemovePlanToWatch && isWatchedTypes(movie) && (
         <button
           onClick={(e) => {
             e.stopPropagation();
