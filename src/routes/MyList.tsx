@@ -120,8 +120,8 @@ const MyList = ({
   );
 
   return (
-    <div className="min-h-screen pt-24 flex items-center justify-center">
-      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 border border-gray-600/30 rounded-2xl bg-black/40 backdrop-blur-lg shadow-xl flex flex-col lg:flex-row gap-6 transition-all duration-200">
+    <div className="min-h-screen pt-24 flex items-center justify-center mt-20">
+      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 border border-gray-800/50 rounded-2xl bg-black/40 backdrop-blur-lg shadow-xl flex flex-col lg:flex-row gap-6 transition-all duration-200">
         {/* Favorite Movies Section */}
         <section className="flex-1 max-w-[42rem] bg-black/20 rounded-lg p-4 h-[30rem] overflow-y-auto custom-scrollbar">
           <h1 className="text-2xl text-white font-bold text-center mb-6">Favorite Movies</h1>
@@ -142,7 +142,7 @@ const MyList = ({
 
         {/* Plan to Watch Section */}
         <section className="flex-1 max-w-[42rem] bg-black/20 rounded-lg p-4 h-[30rem] overflow-y-auto">
-          <h2 className="text-2xl text-white font-bold text-center mb-6">Plan to Watch</h2>
+          <h2 className="text-2xl text-white font-bold text-center mb-6 ">Plan to Watch</h2>
           {filteredPlanToWatch.length === 0 ? (
             <p className="text-center text-gray-400">No movies in your plan to watch list.</p>
           ) : (

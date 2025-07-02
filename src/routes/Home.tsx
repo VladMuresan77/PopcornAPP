@@ -41,7 +41,7 @@ const Home = ({
   toggleFavorite,
   toggleWatched,
   addToPlanToWatch,
-  removeFromWatched, // opțional, funcție de la părinte
+  removeFromWatched, 
 }: Props & { removeFromWatched?: (movie: WatchedTypes) => void }) => {
   const [watchedMoviesState, setWatchedMoviesState] = useState<WatchedTypes[]>(watchedMovies);
   const [selectedMovie, setSelectedMovie] = useState<WatchedTypes | null>(null);
@@ -114,7 +114,7 @@ const Home = ({
     }
   };
 
-  // Funcția care șterge filmul din watchedMoviesState local sau apelează funcția din props
+  
   const handleRemoveWatched = (movie: WatchedTypes) => {
     if (removeFromWatched) {
       removeFromWatched(movie);
@@ -126,10 +126,10 @@ const Home = ({
   const moviesToShow = query.trim() === '' ? recommendedMovies : movieResults;
 
   return (
-    <div className="min-h-screen pt-30 py-20 flex items-center flex-col justify-center">
+    <div className="min-h-screen pt-30 py-20 flex items-center flex-col justify-center mt-20">
       <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 border border-gray-600/30 rounded-2xl bg-black/40 backdrop-blur-lg shadow-xl flex flex-col lg:flex-row gap-6 transition-all duration-200">
-        <div className="flex-1 max-w-[42rem] bg-black/20 rounded-lg p-4 overflow-y-auto h-[30rem]">
-          <h1 className="text-2xl text-white font-bold text-center mb-6">
+        <div className="flex-1 max-w-[42rem] bg-black/20 rounded-lg p-4 overflow-y-auto h-[30rem] ">
+          <h1 className="text-2xl text-white font-bold text-center mb-8">
             {query.trim() === '' ? 'Recommended Movies' : 'Movies'}
           </h1>
           <ul className="space-y-3">
@@ -213,7 +213,7 @@ const Home = ({
             </>
           ) : (
             <>
-              <h2 className="text-2xl text-white font-bold text-center mb-6">Watched Movies</h2>
+              <h2 className="text-2xl text-white font-bold text-center mb-8">Watched Movies</h2>
               <div className="text-center text-gray-300 space-y-1 mb-4">
                 <p>{watchedMoviesState.length} Movies watched</p>
                 <p>⭐ Average IMDB rating: {avgImdbRating}</p>
