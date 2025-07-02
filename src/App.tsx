@@ -90,6 +90,9 @@ function App() {
   const addToPlanToWatch = (movie: WatchedTypes) =>
     toggleMovieInList<WatchedTypes>(movie, setPlanToWatchMovies);
 
+  const removeFromPlanToWatch = (movie: WatchedTypes) =>
+    setPlanToWatchMovies((prev) => prev.filter((m) => m.imdbID !== movie.imdbID));
+
   const listProps = {
     query,
     favoriteMovies,
@@ -98,6 +101,7 @@ function App() {
     toggleFavorite,
     toggleWatched,
     addToPlanToWatch,
+    removeFromPlanToWatch,
   };
 
   return (

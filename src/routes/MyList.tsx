@@ -1,4 +1,4 @@
-import type { ExtendedMovieType, WatchedTypes } from '../types/movieTypes';
+import type {  WatchedTypes } from '../types/movieTypes';
 import { FavoriteIcon } from '../components/Icons';
 import { useMemo } from 'react';
 
@@ -101,7 +101,7 @@ const MyList = ({
   favoriteMovies,
   planToWatchMovies,
   toggleFavorite,
-  addToPlanToWatch,
+
   removeFromPlanToWatch,
 }: Props) => {
   const filteredFavorites = useMemo(
