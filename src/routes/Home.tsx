@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { FavoriteIcon, WatchedIcon, PlanToWatchIcon, Star } from '../components/Icons';
 import type { WatchedTypes } from '../types/movieTypes';
-import type { ListProps as Props } from '../types/ListaProps';
+import type { ListProps as Props } from '../types/ListProps';
 import { AVGStats } from '../components/utils';
 
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
@@ -41,7 +41,7 @@ const Home = ({
   toggleFavorite,
   toggleWatched,
   addToPlanToWatch,
-  removeFromPlanToWatch, // ✅ acum e recunoscut corect
+ 
 }: Props) => {
   const [watchedMoviesState, setWatchedMoviesState] = useState<WatchedTypes[]>(watchedMovies);
   const [selectedMovie, setSelectedMovie] = useState<WatchedTypes | null>(null);

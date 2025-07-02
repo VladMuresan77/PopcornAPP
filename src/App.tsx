@@ -9,7 +9,7 @@ import Contact from './routes/Contact';
 import Login from './routes/Login';
 
 import type { MovieTypes, WatchedTypes } from './types/movieTypes';
-import type { ListProps } from './types/ListaProps';
+import type { ListProps } from './types/ListProps';
 import { useAuth } from './context/AuthContext';
 import { db } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
