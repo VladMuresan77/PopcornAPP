@@ -41,8 +41,8 @@ const Home = ({
   toggleFavorite,
   toggleWatched,
   addToPlanToWatch,
- 
-}: Props) => {
+  removeFromWatched, // opțional, funcție de la părinte
+}: Props & { removeFromWatched?: (movie: WatchedTypes) => void }) => {
   const [watchedMoviesState, setWatchedMoviesState] = useState<WatchedTypes[]>(watchedMovies);
   const [selectedMovie, setSelectedMovie] = useState<WatchedTypes | null>(null);
   const [userRating, setUserRating] = useState<number | ''>('');
@@ -111,6 +111,15 @@ const Home = ({
     if (selectedMovie && userRating !== '') {
       updateUserRating(selectedMovie.imdbID, userRating);
       alert(`Yay! Rating saved! You give ${userRating} stars for the movie ${selectedMovie.Title}`);
+    }
+  };
+
+  // Funcția care șterge filmul din watchedMoviesState local sau apelează funcția din props
+  const handleRemoveWatched = (movie: WatchedTypes) => {
+    if (removeFromWatched) {
+      removeFromWatched(movie);
+    } else {
+      setWatchedMoviesState(prev => prev.filter(m => m.imdbID !== movie.imdbID));
     }
   };
 
@@ -208,8 +217,8 @@ const Home = ({
               <div className="text-center text-gray-300 space-y-1 mb-4">
                 <p>{watchedMoviesState.length} Movies watched</p>
                 <p>⭐ Average IMDB rating: {avgImdbRating}</p>
-                <p>💫 User rating: {avgUserRating}</p>
-                <p>⏳ Total time: {formattedRuntime}</p>
+                <p>⏳ Average runtime: {formattedRuntime}</p>
+                <p>💫 Your rating average: {avgUserRating}</p>
               </div>
               <ul className="space-y-4 max-h-80 overflow-y-auto pr-2">
                 {watchedMoviesState.map(movie => (
@@ -224,6 +233,15 @@ const Home = ({
                       <p className="text-sm text-gray-400">💫 Your Rating: {movie.userRating ?? 'n/a'}</p>
                     </div>
                     <p className="text-sm">{movie.Year}</p>
+                    <button
+                      onClick={e => {
+                        e.stopPropagation();
+                        handleRemoveWatched(movie);
+                      }}
+                      className="bg-gray-700 hover:bg-gray-800 text-white text-xs px-3 py-1 rounded ml-4"
+                    >
+                      Remove
+                    </button>
                   </li>
                 ))}
               </ul>

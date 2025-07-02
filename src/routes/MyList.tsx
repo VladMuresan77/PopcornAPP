@@ -54,7 +54,8 @@ const MovieListItem = ({
       </div>
 
       {!showRemoveButton && onToggleFavorite && (
-        <div className="flex flex-col items-center">
+        <div className="flex gap-5
+         ml-auto">
           <div>
             <p>
               <span role="img" aria-label="Year">
@@ -124,7 +125,7 @@ const MyList = ({
         {/* Favorite Movies Section */}
         <section className="flex-1 max-w-[42rem] bg-black/20 rounded-lg p-4 h-[30rem] overflow-y-auto custom-scrollbar">
           <h1 className="text-2xl text-white font-bold text-center mb-6">Favorite Movies</h1>
-          <ul className="space-y-3">
+          <ul className="space-y-3  ">
             {filteredFavorites.length === 0 && (
               <li className="text-center text-gray-400">No favorite movies match your search.</li>
             )}
