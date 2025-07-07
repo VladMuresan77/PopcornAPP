@@ -140,12 +140,15 @@ const Home = ({
                 onClick={() => onSelectedMovie(movie)}
               >
                 <img src={movie.Poster} alt={`${movie.Title} Poster`} className="w-24 h-auto rounded" />
+                <div className="flex flex-col justify-between w-full">
                 <div>
-                  <h3 className="text-gray-200 text-left -mt-4">{movie.Title}</h3>
-                  <p className="text-gray-400 text-sm text-left">📅 Year: {movie.Year}</p>
-                  <p className="text-gray-400 text-sm text-left">⭐ IMDB: {movie.imdbRating}</p>
+                  <h3 className="text-gray-200 text-left truncate whitespace-nowrap min-w-[300px] flex gap-4">{movie.Title}</h3>
+                 
+                  <div className="flex gap-6 text-sm text-gray-400 mt-1 ">
+                    <p>⭐ IMDB: {movie.imdbRating}</p>
+                    <p>📅 Year: {movie.Year}</p></div>
                 </div>
-                <div className="flex gap-2 ml-auto">
+                <div className="flex gap-6 text-sm text-gray-400 mt-5">
                   <FavoriteIcon
                     filled={favoriteMovies.some(m => m.imdbID === movie.imdbID)}
                     onClick={() => toggleFavorite(movie)}
@@ -158,7 +161,9 @@ const Home = ({
                     filled={planToWatchMovies.some(m => m.imdbID === movie.imdbID)}
                     onClick={() => addToPlanToWatch(movie)}
                   />
+                  </div>
                 </div>
+                
               </li>
             ))}
           </ul>
@@ -229,19 +234,19 @@ const Home = ({
                   >
                     <img src={movie.Poster} alt={`${movie.Title} Poster`} className="w-20 h-auto rounded" />
                     <div>
-                      <h3>{movie.Title}</h3>
-                      <p className="text-sm text-gray-400">💫 Your Rating: {movie.userRating ?? 'n/a'}</p>
-                    </div>
-                    <p className="text-sm">{movie.Year}</p>
+                      <h3 className='text-gray-200 text-left  truncate whitespace-nowrap min-w-[300px] flex gap-4'>{movie.Title}</h3>
+                      <p className="text-sm text-gray-400 flex flex-col justify-between w-full">💫 Your Rating: {movie.userRating ?? 'n/a'}</p>
+                    {/* <p className="text-sm text-gray-400 flex flex-col justify-between w-full">{movie.Year}</p> */}
                     <button
                       onClick={e => {
                         e.stopPropagation();
                         handleRemoveWatched(movie);
                       }}
-                      className="bg-gray-700 hover:bg-gray-800 text-white text-xs px-3 py-1 rounded ml-4"
+                      className="bg-red-500 hover:bg-red-800 text-white  flex gap-10 mt-4 -ml-1 sm:ml-4 text-xs px-3 py-1 rounded"
                     >
-                      Remove
+                      Delete
                     </button>
+                    </div>
                   </li>
                 ))}
               </ul>

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -22,10 +21,20 @@ function App() {
 
   const { globalUser, authLoading } = useAuth();
 
-  useEffect(() => {
-    if (authLoading || !globalUser) return;
+  const [userDataLoading, setUserDataLoading] = useState(true);
+  const [dataLoadedFromServer, setDataLoadedFromServer] = useState(false);
 
+  useEffect(() => {
     const loadUserData = async () => {
+      if (!globalUser) {
+        setFavoriteMovies([]);
+        setWatchedMovies([]);
+        setPlanToWatchMovies([]);
+        setUserDataLoading(false);
+        setDataLoadedFromServer(false);
+        return;
+      }
+
       try {
         const userDoc = doc(db, 'users', globalUser.uid);
         const userSnap = await getDoc(userDoc);
@@ -41,27 +50,36 @@ function App() {
             watched: [],
             planToWatch: [],
           });
-          setFavoriteMovies([]);
-          setWatchedMovies([]);
-          setPlanToWatchMovies([]);
         }
+
+        setDataLoadedFromServer(true);
       } catch (error) {
         console.error('Error loading user data:', error);
+      } finally {
+        setUserDataLoading(false);
       }
     };
 
-    loadUserData();
+    if (!authLoading) {
+      setUserDataLoading(true);
+      setDataLoadedFromServer(false);
+      loadUserData();
+    }
   }, [globalUser, authLoading]);
 
   useEffect(() => {
-    if (!globalUser || authLoading) return;
+    if (!globalUser || authLoading || userDataLoading || !dataLoadedFromServer) return;
 
     const saveUserData = async () => {
       try {
         const userDoc = doc(db, 'users', globalUser.uid);
         await setDoc(
           userDoc,
-          { favorites: favoriteMovies, watched: watchedMovies, planToWatch: planToWatchMovies },
+          {
+            favorites: favoriteMovies,
+            watched: watchedMovies,
+            planToWatch: planToWatchMovies,
+          },
           { merge: true }
         );
       } catch (error) {
@@ -70,7 +88,15 @@ function App() {
     };
 
     saveUserData();
-  }, [favoriteMovies, watchedMovies, planToWatchMovies, globalUser, authLoading]);
+  }, [
+    favoriteMovies,
+    watchedMovies,
+    planToWatchMovies,
+    globalUser,
+    authLoading,
+    userDataLoading,
+    dataLoadedFromServer,
+  ]);
 
   const toggleMovieInList = <T extends { imdbID: string }>(
     movie: T,
