@@ -15,8 +15,14 @@ const links = [
     external: true,
   },
   {
+    href: 'https://github.com/VladMuresan77/PopcornAPP/tree/main',
+    label: 'GitHub (repositorie)',
+    icon: <FaGithub className="text-2xl" />,
+    external: true,
+  },
+  {
     href: 'https://x.com/VLADM999',
-    label: 'X (Twitter)',
+    label: 'X',
     icon: <FaTwitter className="text-2xl" />,
     external: true,
   },

@@ -26,72 +26,65 @@ const MovieListItem = ({
   showRemoveButton?: boolean;
 }) => {
   return (
-    <li
-      className={`flex items-center gap-4 p-2 rounded-lg shadow-md cursor-pointer transition duration-150 ${
-        showRemoveButton ? 'bg-gray-600/70' : 'bg-gray-600/80 hover:bg-gray-800'
-      }`}
-    >
+    <li className="flex gap-7 text-lg ">
       <img
         src={movie.Poster}
         alt={`${movie.Title} Poster`}
-        className={`w-20 h-auto rounded ${showRemoveButton ? 'rounded-lg shadow' : ''}`}
+        className="w-20 h-auto rounded shadow"
       />
 
-      <div className="flex flex-col justify-between flex-1">
-        <h3 className="text-white text-lg font-semibold text-left whitespace-nowrap truncate w-full">
+      <div className="flex flex-col justify-between w-full">
+        <h3 className="text-white text-lg font-semibold text-left truncate">
           {movie.Title}
         </h3>
 
-        <div className="mt-1 text-sm text-gray-300 space-y-1">
+        <div className="flex gap-10 text-sm text-gray-400 mt-3">
           {isWatchedTypes(movie) && (
             <>
-              <p>
-                <span className="mr-1">⭐</span> {movie.imdbRating}
-              </p>
-              <p>
-                <span className="mr-1">⏳</span> {movie.runtime} min
-              </p>
+              <p><span className="mr-1">⏳</span> {movie.runtime} min</p>
+              <p><span className="mr-1">⭐</span> {movie.imdbRating}</p>
             </>
           )}
           {!showRemoveButton && (
             <>
-              <p>
-                <span className="mr-1">📅</span> {movie.Year}
-              </p>
+            <p><span className="mr-1">📅</span> {movie.Year}</p>
               {!isWatchedTypes(movie) && (
-                <p>
-                  <span className="mr-1">⭐</span> N/A
-                </p>
+                <p><span className="mr-1">⭐</span> N/A</p>
               )}
             </>
           )}
         </div>
+
+        
+        {(onRemovePlanToWatch || onToggleFavorite) && (
+          <div className="flex gap-4 mt-4">
+            {showRemoveButton && onRemovePlanToWatch && isWatchedTypes(movie) && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemovePlanToWatch(movie);
+                }}
+                className="bg-red-500 hover:bg-red-700 text-white text-xs px-3 py-1 rounded shadow"
+              >
+                Remove
+              </button>
+            )}
+
+            {!showRemoveButton && onToggleFavorite && isWatchedTypes(movie) && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleFavorite(movie);
+                }}
+                className="hover:scale-110 transition-transform"
+                aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+              >
+                <FavoriteIcon filled={!!isFavorite} onClick={() => {}} />
+              </button>
+            )}
+          </div>
+        )}
       </div>
-
-      {showRemoveButton && onRemovePlanToWatch && isWatchedTypes(movie) && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onRemovePlanToWatch(movie);
-          }}
-          className="bg-red-500 hover:bg-red-800 text-white text-xs px-3 py-1 rounded"
-        >
-          Remove
-        </button>
-      )}
-
-      {!showRemoveButton && onToggleFavorite && isWatchedTypes(movie) && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onToggleFavorite(movie);
-          }}
-          className="ml-2 mt-5"
-          aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-        >
-          <FavoriteIcon filled={!!isFavorite} onClick={() => {}} />
-        </button>
-      )}
     </li>
   );
 };
@@ -120,12 +113,12 @@ const MyList = ({
   );
 
   return (
-    <div className="min-h-screen pt-24 flex items-center justify-center mt-20">
-      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 border border-gray-800/50 rounded-2xl bg-black/40 backdrop-blur-lg shadow-xl flex flex-col lg:flex-row gap-6 transition-all duration-200">
+    <div className="min-h-screen pt-30 py-20 flex items-center flex-col justify-center mt-20">
+      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 border border-gray-600/30 rounded-2xl bg-black/40 backdrop-blur-lg shadow-xl flex flex-col lg:flex-row gap-6 transition-all duration-200">
 
         {/* Favorite Movies */}
-        <section className="flex-1 max-w-[42rem] bg-black/20 rounded-lg p-4 h-[30rem] overflow-y-auto custom-scrollbar">
-          <h1 className="text-2xl text-white font-bold text-center mb-6">Favorite Movies</h1>
+        <section className="flex-1 max-w-[42rem] bg-black/20 rounded-lg p-4 overflow-y-auto h-[30rem] ">
+          <h1 className="text-2xl text-white font-bold text-center mb-8">Favorite Movies</h1>
           <ul className="space-y-3">
             {filteredFavorites.length === 0 ? (
               <li className="text-center text-gray-400">
