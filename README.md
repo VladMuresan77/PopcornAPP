@@ -1,59 +1,51 @@
-# React + TypeScript + Vite
-[![Netlify Status](https://api.netlify.com/api/v1/badges/99a2d2c3-ce5c-46e2-8ebc-8c13428d5148/deploy-status)](https://app.netlify.com/projects/popcornapp-movie-app/deploys)
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🍿 PopcornApp
 
-Currently, two official plugins are available:
+A responsive web application for tracking movies, allowing users to browse, search, and organize films into personalized lists like **Favorites**, **Watched**, and **Plan to Watch**. The app features multiple routes—**Home**, **My List**, **About**, and **Contact** offering smooth navigation with React Router. The homepage includes a looping fullscreen background video for a dynamic and immersive UI.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 🔍 Search movies and view details (title, rating, description)  
+- 🎞️ Add movies to personalized lists:  
+  - Favorites  
+  - Watched  
+  - Plan to Watch  
+- ⭐ Leave personal ratings for movies in your *Watched* list, stored alongside OMDB data  
+- 📂 Routes: Home, My List, About, Contact  
+- 🌄 Fullscreen background video on loop on the homepage  
+- 🔁 Client-side routing with React Router  
+- 🌐 Dynamic movie data fetched from the OMDB API (Open Movie Database)  
+- 🔐 Secure user data storage with Firebase Firestore  
+- 📱 Mobile responsive design  
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Tech Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- React + TypeScript  
+- Tailwind CSS  
+- Firebase Firestore  
+- OMDB API  
+- React Router  
+- Netlify  
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
-"# BACKUP-PopcornAPP" 
-"# BACKUP-PopcornAPP-ALL" 
-"# popcornAPP-fara-video" 
-"# popcornAPP-fara-video" 
-"# PopcornAPP" 
+---
+
+## Live Demo
+
+[https://popcorn-web-app.netlify.app](https://popcorn-web-app.netlify.app)
+
+---
+
+## GitHub Repository
+
+[https://github.com/VladMuresan77/PopcornAPP](https://github.com/VladMuresan77/PopcornAPP)
+
+---
+
+## Screenshots
+
+![Screenshot 1](https://github.com/user-attachments/assets/367074be-ec2d-4bd2-93b9-9f2aa95e9901)  
+![Mockup 1](https://github.com/user-attachments/assets/70b1401d-56e9-4f5f-a4c2-8052bd790bb9)  
+![Mockup 2](https://github.com/user-attachments/assets/37d45de8-a8d4-48b3-96e5-39a73cab3087)
