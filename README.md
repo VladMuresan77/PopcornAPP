@@ -44,15 +44,6 @@ A responsive web application for tracking movies, allowing users to browse, sear
 
 ---
 
-## Installation & Running Locally
-
-```bash
-git clone https://github.com/VladMuresan77/PopcornAPP.git
-cd PopcornAPP
-npm install
-npm run dev
-
----
 ## Screenshots
 
 ![Screenshot 1](https://github.com/user-attachments/assets/367074be-ec2d-4bd2-93b9-9f2aa95e9901)  
