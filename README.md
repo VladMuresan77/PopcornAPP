@@ -51,3 +51,12 @@ git clone https://github.com/VladMuresan77/PopcornAPP.git
 cd PopcornAPP
 npm install
 npm run dev
+
+---
+## Screenshots
+
+![Screenshot 1](https://github.com/user-attachments/assets/367074be-ec2d-4bd2-93b9-9f2aa95e9901)  
+![Mockup 1](https://github.com/user-attachments/assets/70b1401d-56e9-4f5f-a4c2-8052bd790bb9)  
+![Mockup 2](https://github.com/user-attachments/assets/37d45de8-a8d4-48b3-96e5-39a73cab3087)
+
+
