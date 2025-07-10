@@ -17,7 +17,7 @@ const AuthToggle = ({
           key={mode}
           onClick={() => setIsLogin(idx === 0)}
           className={`px-4 py-2 rounded-t-lg font-semibold ${
-            active ? "bg-gray-900 text-white" : "text-gray-800"
+            active ? "bg-zinc-700 text-white" : "text-zinc-700"
           }`}
           aria-pressed={active}
         >
@@ -39,14 +39,14 @@ const InputField = ({
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => (
-  <label className="block mb-4 text-gray-900">
+  <label className="block mb-4 text-zinc-900">
     {label}
     <input
       type={type}
       value={value}
       onChange={onChange}
       required
-      className="w-full mt-1 p-2 rounded bg-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-gray-900"
+      className="w-full mt-1 p-2 rounded bg-zinc-600 text-white focus:outline-none focus:ring-2 focus:ring-red-800"
     />
   </label>
 );
@@ -76,7 +76,7 @@ const Login: React.FC = () => {
 
   if (globalUser) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-zinc-900 text-white">
         <h2 className="text-3xl mb-4">Hello: {globalUser.email}!</h2>
         <button
           onClick={() => {
@@ -92,12 +92,12 @@ const Login: React.FC = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-900">
+    <div className="flex justify-center items-center min-h-screen bg-zinc-900">
       <div className="bg-gray-200 p-8 rounded-lg shadow-lg w-full max-w-md">
         <AuthToggle isLogin={isLogin} setIsLogin={setIsLogin} />
 
         <form onSubmit={handleSubmit}>
-          <h2 className="text-2xl mb-6 text-gray-900 font-semibold text-center">
+          <h2 className="text-2xl mb-6 text-zinc-900 font-semibold text-center">
             {isLogin ? "Login" : "Sign Up"}
           </h2>
 
@@ -108,7 +108,7 @@ const Login: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-gray-900 hover:bg-gray-800 text-white py-2 rounded transition"
+            className="w-full bg-red-800 hover:bg-[#6e0b14] text-white py-2 rounded transition"
           >
             {isLogin ? "Login" : "Sign Up"}
           </button>

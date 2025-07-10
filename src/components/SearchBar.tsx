@@ -16,7 +16,7 @@ const SearchBar: React.FC<Props> = ({ query, onChange }) => {
       value={query}
       onChange={handleInputChange}
       placeholder="Search movies..."
-      className="w-full px-2 py-1 rounded-lg bg-slate-700 text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-sky-900 transition md:w-64 md:px-4 md:py-2 md:text-base"
+      className="w-full px-2 py-1 rounded-lg bg-zinc-800 text-white placeholder-zinc-400 text-sm focus:outline-none focus:ring-2 focus:ring-red-800 transition md:w-64 md:px-4 md:py-2 md:text-base"
       aria-label="Search movies"
     />
   );

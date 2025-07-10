@@ -127,7 +127,7 @@ const Home = ({
 
   return (
     <div className="min-h-screen pt-30 py-20 flex items-center flex-col justify-center mt-20">
-      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 border border-gray-600/30 rounded-2xl bg-black/40 backdrop-blur-lg shadow-xl flex flex-col lg:flex-row gap-6 transition-all duration-200">
+      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 border border-zinc-900/40 rounded-2xl bg-black/40 backdrop-blur-lg shadow-xl flex flex-col lg:flex-row gap-6 transition-all duration-200">
         <div className="flex-1 max-w-[42rem] bg-black/20 rounded-lg p-4 overflow-y-auto h-[30rem] ">
           <h1 className="text-2xl text-white font-bold text-center mb-8">
             {query.trim() === '' ? 'Recommended Movies' : 'Movies'}
@@ -136,7 +136,7 @@ const Home = ({
             {moviesToShow.map(movie => (
               <li
                 key={movie.imdbID}
-                className="flex items-center gap-4 text-lg cursor-pointer hover:bg-gray-600 rounded p-2"
+                className="flex items-center gap-4 text-lg cursor-pointer hover:bg-zinc-700 rounded p-3"
                 onClick={() => onSelectedMovie(movie)}
               >
                 <img src={movie.Poster} alt={`${movie.Title} Poster`} className="w-24 h-auto rounded" />
@@ -210,7 +210,7 @@ const Home = ({
                 </div>
                 <button
                   onClick={onSaveRating}
-                  className="mt-3 bg-slate-700 hover:bg-slate-900 text-white font-semibold py-2 px-4 rounded mx-auto block"
+                  className="mt-3 bg-red-900 hover:bg-[#6e0b14] text-white font-semibold py-2 px-4 rounded mx-auto block"
                 >
                   Save Rating
                 </button>
@@ -229,7 +229,7 @@ const Home = ({
                 {watchedMoviesState.map(movie => (
                   <li
                     key={movie.imdbID}
-                    className="flex items-center justify-between gap-4 text-lg cursor-pointer hover:bg-gray-600 rounded p-2"
+                    className="flex items-center justify-between gap-4 text-lg cursor-pointer hover:bg-zinc-700 rounded p-2"
                     onClick={() => onSelectedMovie(movie)}
                   >
                     <img src={movie.Poster} alt={`${movie.Title} Poster`} className="w-20 h-auto rounded" />
