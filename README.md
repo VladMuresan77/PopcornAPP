@@ -46,8 +46,8 @@ A responsive web application for tracking movies, allowing users to browse, sear
 
 ## Screenshots
 
-![Screenshot 1](https://github.com/user-attachments/assets/367074be-ec2d-4bd2-93b9-9f2aa95e9901)  
-![Mockup 1](https://github.com/user-attachments/assets/70b1401d-56e9-4f5f-a4c2-8052bd790bb9)  
-![Mockup 2](https://github.com/user-attachments/assets/37d45de8-a8d4-48b3-96e5-39a73cab3087)
+![s1](https://github.com/user-attachments/assets/4cb48805-a7e5-4fd8-90ad-1d6f5ce9f3e4)
+![s2](https://github.com/user-attachments/assets/2f685d8b-be63-49e6-81e4-33b0a4b70817)
+![s3](https://github.com/user-attachments/assets/dd05511b-10ce-4652-98b3-e8ffb15b9a0c)
 
 
